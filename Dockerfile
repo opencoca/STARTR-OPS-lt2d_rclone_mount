@@ -35,5 +35,9 @@ RUN printf '%s\n' \
     'key = $B2_KEY' \
     '' \ > /root/.config/rclone/rclone.conf
 
+RUN echo $B2_ACCOUNT
+
+RUN echo $B2_KEY
+
 RUN cat /root/.config/rclone/rclone.conf
 
