@@ -1,7 +1,7 @@
 FROM alpine:3.14
 
 RUN apk update && apk upgrade
-RUN apk add --no-cache curl screen
+RUN apk add --no-cache curl screen sleep cat
 #RCLONE for Apline currently installer broken on alpine
 #RUN curl https://rclone.org/install.sh
 
