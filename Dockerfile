@@ -40,4 +40,4 @@ RUN echo $B2_ACCOUNT
 RUN echo $B2_KEY
 
 RUN cat /root/.config/rclone/rclone.conf
-
+CMD rclone config
