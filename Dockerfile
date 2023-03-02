@@ -26,7 +26,7 @@ ENV B2_ACCOUNT=${B2_ACCOUNT}
 ARG B2_KEY=${B2_KEY}
 ENV B2_KEY=${B2_KEY}
 
-mkdir -p "${RCLONE_CONF%/*}" && touch "$RCLONE_CONF"
+RUN mkdir -p "${RCLONE_CONF%/*}" && touch "$RCLONE_CONF"
 
 RUN printf '%s\n' \
     '[BackBlaze]' \
