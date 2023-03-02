@@ -14,20 +14,9 @@ RUN cd rclone-*-linux-amd64 &&\
   #makewhatis /usr/share/man
 
 ### Rclone arg/env varables
-#[sftp]
-#type= sftp
-#ARG SFTP_HOST = ${SFPT_HOST}
-#ENV SFTP_HOST = ${SFPT_HOST}
-#ARG SFTP_USER = ${SFTP_USER}
-#ENV SFTP_USER = ${SFTP_USER}
 
-#ARG key_file = /app/.ssh/id_rsa
-#ENV key_file = /app/.ssh/id_rsa
-
-#ARG md5sum_command = md5sum
-#ENV md5sum_command = md5sum
-#ARG sha1sum_command = sha1sum
-#ENV sha1sum_command = sha1sum
+ARG RCLONE_CONF="/root/.config/rclone/rclone.conf"
+ENV RCLONE_CONF="/root/.config/rclone/rclone.conf"
 
 #[BackBlaze]
 #type = b2
@@ -36,6 +25,8 @@ ARG B2_ACCOUNT=${B2_ACCOUNT}
 ENV B2_ACCOUNT=${B2_ACCOUNT}
 ARG B2_KEY=${B2_KEY}
 ENV B2_KEY=${B2_KEY}
+
+mkdir -p "${RCLONE_CONF%/*}" && touch "$RCLONE_CONF"
 
 RUN printf '%s\n' \
     '[BackBlaze]' \
