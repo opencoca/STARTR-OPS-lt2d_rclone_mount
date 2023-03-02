@@ -21,10 +21,10 @@ RUN curl https://rclone.org/install.sh
 #[BackBlaze]
 #type = b2
 
-ARG B2_ACCOUNT = ${B2_ACCOUNT}
-ENV B2_ACCOUNT = ${B2_ACCOUNT}
-ARG B2_KEY = ${B2_KEY}
-ENV B2_KEY = ${B2_KEY}
+ARG B2_ACCOUNT=${B2_ACCOUNT}
+ENV B2_ACCOUNT=${B2_ACCOUNT}
+ARG B2_KEY=${B2_KEY}
+ENV B2_KEY=${B2_KEY}
 
 RUN printf '%s\n' \
     '[BackBlaze]' \
