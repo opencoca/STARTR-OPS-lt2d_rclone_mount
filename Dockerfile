@@ -1,6 +1,17 @@
 FROM alpine:3.14
-RUN apk add --no-cache curl
-RUN curl https://rclone.org/install.sh
+#RCLONE for Apline currently installer broken on alpine
+#RUN apk add --no-cache curl
+#RUN curl https://rclone.org/install.sh
+
+RUN curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
+RUN unzip rclone-current-linux-amd64.zip
+RUN cd rclone-*-linux-amd64 &&\
+  cp rclone /usr/bin/ &&\
+  chown root:root /usr/bin/rclone &&\
+  chmod 755 /usr/bin/rclone &&\
+  mkdir -p /usr/share/man/man1 &&\
+  cp rclone.1 /usr/share/man/man1/ &&\
+  makewhatis /usr/share/man
 
 ### Rclone arg/env varables
 #[sftp]
