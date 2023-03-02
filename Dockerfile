@@ -1,5 +1,5 @@
 FROM alpine:3.14
-RUN apk add --no-cache curl
+RUN apk add --no-cache curl screen
 #RCLONE for Apline currently installer broken on alpine
 #RUN curl https://rclone.org/install.sh
 
@@ -40,4 +40,4 @@ RUN echo $B2_ACCOUNT
 RUN echo $B2_KEY
 
 RUN cat /root/.config/rclone/rclone.conf
-CMD rclone config
+CMD ["sleep 600"]
