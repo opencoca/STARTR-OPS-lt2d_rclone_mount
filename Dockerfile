@@ -1,5 +1,5 @@
 FROM alpine:3.14
-RUN apk add --no-cache curl makewhatis
+RUN apk add --no-cache curl
 #RCLONE for Apline currently installer broken on alpine
 #RUN curl https://rclone.org/install.sh
 
@@ -10,8 +10,8 @@ RUN cd rclone-*-linux-amd64 &&\
   chown root:root /usr/bin/rclone &&\
   chmod 755 /usr/bin/rclone &&\
   mkdir -p /usr/share/man/man1 &&\
-  cp rclone.1 /usr/share/man/man1/ &&\
-  makewhatis /usr/share/man
+  cp rclone.1 /usr/share/man/man1/
+  #makewhatis /usr/share/man
 
 ### Rclone arg/env varables
 #[sftp]
