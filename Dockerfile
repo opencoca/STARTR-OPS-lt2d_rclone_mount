@@ -1,6 +1,6 @@
 FROM alpine:3.14
+RUN apk add --no-cache curl
 #RCLONE for Apline currently installer broken on alpine
-#RUN apk add --no-cache curl
 #RUN curl https://rclone.org/install.sh
 
 RUN curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
