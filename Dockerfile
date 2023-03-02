@@ -1,5 +1,5 @@
 FROM alpine:3.14
-RUN apk add --no-cache curl
+RUN apk add --no-cache curl makewhatis
 #RCLONE for Apline currently installer broken on alpine
 #RUN curl https://rclone.org/install.sh
 
