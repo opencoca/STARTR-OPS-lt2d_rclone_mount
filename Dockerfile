@@ -1,7 +1,7 @@
 FROM alpine:3.14
 
 RUN apk update && apk upgrade
-RUN apk add --no-cache curl screen sleep
+RUN apk add --no-cache curl screen bash
 #RCLONE for Apline currently installer broken on alpine
 #RUN curl https://rclone.org/install.sh
 
@@ -19,6 +19,8 @@ RUN cd rclone-*-linux-amd64 &&\
 
 ARG RCLONE_CONF="/root/.config/rclone/rclone.conf"
 ENV RCLONE_CONF="/root/.config/rclone/rclone.conf"
+
+RUN mkdir -p $(dirname $RCLONE_CONF) && touch $RCLONE_CONF
 
 #[BackBlaze]
 #type = b2
@@ -41,4 +43,4 @@ RUN echo $B2_ACCOUNT
 
 RUN echo $B2_KEY
 
-CMD ["cat /root/.config/rclone/rclone.conf & sleep 600"]
+CMD ["bash", "sleep", "600"]
