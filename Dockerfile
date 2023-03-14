@@ -1,19 +1,19 @@
 FROM alpine:3.14
 
 RUN apk update && apk upgrade
-RUN apk add --no-cache curl screen bash
-#RCLONE for Apline currently installer broken on alpine
-#RUN curl https://rclone.org/install.sh
+RUN apk add --no-cache curl bash fuse
 
-RUN curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
-RUN unzip rclone-current-linux-amd64.zip
-RUN cd rclone-*-linux-amd64 &&\
-  cp rclone /usr/bin/ &&\
+RUN curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip &&\
+  unzip rclone-current-linux-amd64.zip &&\
+  rm rclone-current-linux-amd64.zip &&\
+  cd rclone-*-linux-amd64 &&\
+  mv rclone /usr/bin/ &&\
   chown root:root /usr/bin/rclone &&\
   chmod 755 /usr/bin/rclone &&\
   mkdir -p /usr/share/man/man1 &&\
-  cp rclone.1 /usr/share/man/man1/
-  #makewhatis /usr/share/man
+  mv rclone.1 /usr/share/man/man1/ &&\
+  cd .. &&\
+  rm -rf rclone-v1.61.1-linux-amd64
 
 ### Rclone arg/env varables
 
@@ -32,15 +32,10 @@ ENV B2_KEY=${B2_KEY}
 
 RUN mkdir -p "${RCLONE_CONF%/*}" && touch "$RCLONE_CONF"
 
-RUN printf '%s\n' \
-    '[BackBlaze]' \
-    'type = b2' \
-    'account = $B2_ACCOUNT' \
-    'key = $B2_KEY' \
-    '' \ > /root/.config/rclone/rclone.conf
-
 RUN echo $B2_ACCOUNT
-
 RUN echo $B2_KEY
+RUN mkdir b2
 
-CMD ["bash", "sleep", "600"]
+ADD start.sh /app/start.sh
+
+CMD ["bash", "/app/start.sh"]
