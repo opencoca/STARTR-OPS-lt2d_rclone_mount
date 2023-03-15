@@ -4,4 +4,4 @@ Docker/Caprover Mount Example Project
 Using modified version of Docker recomened workflow
 Now with cleaner tag names
 
-v0.0.4
+v0.0.5
