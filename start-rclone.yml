@@ -4,10 +4,8 @@ services:
         image: openco/lt2d_rclone_mount:$$cap_RCLONE_MOUNT_VERSION
         hostname: $$cap_appname.$$cap_root_domain
         environment:
-            PUID: $$cap_RCLONE_MOUNT_PUID
-            PGID: $$cap_RCLONE_MOUNT_GUID
-            TZ: $$cap_RCLONE_MOUNT_TZ
-            INTERFACE: $$cap_RCLONE_MOUNT_INTERFACE
+            B2_ACCOUNT: $$cap_B2_ACCOUNT
+            B2_KEY: $$cap_B2_KEY
         ports:
             - $$cap_RCLONE_MOUNT_PORT_TCP:$$cap_RCLONE_MOUNT_PORT_TCP
         devices:
