@@ -1,0 +1,65 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: openco/lt2d_rclone_mount:$$cap_RCLONE_MOUNT_VERSION
+        hostname: $$cap_appname.$$cap_root_domain
+        environment:
+            PUID: $$cap_RCLONE_MOUNT_PUID
+            PGID: $$cap_RCLONE_MOUNT_GUID
+            TZ: $$cap_RCLONE_MOUNT_TZ
+            INTERFACE: $$cap_RCLONE_MOUNT_INTERFACE
+        ports:
+            - $$cap_RCLONE_MOUNT_PORT_TCP:$$cap_RCLONE_MOUNT_PORT_TCP
+        devices:
+            - /dev/fuse:/dev/fuse
+        cap_add:
+            - SYS_ADMIN
+
+caproverOneClickApp:
+    displayName: Instant Rclone Mount
+    isOfficial: false
+    description: An instant RClone mount for BackBlaze
+    documentation: https://github.com/opencoca/lt2d_rclone_mount
+    instructions:
+        start: |-
+            This will automount BackBlaze account:key. 
+
+            **Important notes:**
+            - If you are using CapRover version `1.10.1` or older, you will need to **override CapRover's configuration** to use the newer Docker API version `1.4.1` (this can be done manually or by running `echo "{\"dockerApiVersion\":\"v1.41\"}" > /captain/data/config-override.json`)
+        end: |-
+            Rclone Mount  has been deployed **successfully**!
+
+            Before you can start using it, you need to perform some steps.
+            You only need to do this once.
+
+            **Please screenshot/copy the following instructions before proceeding:**
+
+            1. Go to the **HTTP Settings** of your deployment `$$cap_appname` here in CapRover
+            2. **Enable HTTPS**
+            3. **Edit Default Nginx Configurations** and search for the line `set $upstream http://<%-s.localDomain%>:<%-s.containerHttpPort%>;` and replace `http://` with `https://`
+            4. Go to **App Configs** and paste the following snippet into **Service Update Override**: `{ "TaskTemplate": { "ContainerSpec": { "CapabilityAdd": ["CAP_NET_ADMIN"], "Hostname": "$$cap_appname.$$cap_root_domain" } } }`
+            5. **Save & Update** and wait a minute
+            6. Go to https://$$cap_appname.$$cap_root_domain/admin and log in using user `admin` and password `password`
+            7. Navigate to **Configuration** > **Network Settings** and replace the value in **Hostname Or IP Address** with `$$cap_appname.$$cap_root_domain` and update the server (if you get an error just refresh the page, log back in to the admin page (`/admin`) and proceed with the next step)
+            8. Navigate to **User Management** > **User Permissions** and add **New Username**, set a password, make it an admin and **Save Settings**.
+            9. Log out and log in as the new user
+            10. Navigate to **User Management** > **User Permissions** and delete the `admin` account
+            11. Access via SSH to your server and execute `docker exec -it $(docker ps --filter name=srv-captain--$$cap_appname -q) sed -i '/boot_pam_users.0=admin/c\boot_pam_users.0=abcnonexistentuserxyz' /config/etc/as.conf` to block the `admin` account and prevent its creation during container restart
+
+    variables:
+        - id: $$cap_RCLONE_MOUNT_VERSION
+          label: General | Version Tag
+          description: Check out their valid tags at https://hub.docker.com/r/linuxserver/openvpn-as/tags
+          defaultValue: latest
+          validRegex: /.{1,}/
+        - id: $$cap_B2_ACCOUNT
+          label: BackBlaze Application KeyID
+          description: Your BackBlaze account needs to use an applicationKeyId as the account. Do not use the master Account ID. If you try then B2 will return 401 errors. Find or set yours at https://secure.backblaze.com/app_keys.htm
+          defaultValue: 0000000000000000000000000
+          validRegex: /.{1,}/
+        - id: $$cap_B2_KEY
+          label: Your BackBlaze Application Key 
+          description: Use the corsponding Application Key associated with the Application KeyID above. Find or set yours at https://secure.backblaze.com/app_keys.htm
+          defaultValue: 000000000
+          validRegex: /.{1,}/
+      
