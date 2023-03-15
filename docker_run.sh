@@ -32,4 +32,4 @@ docker run  -it -P -p 80 \
   -e PROJECT="${PROJECT//./_}" \
   -e PASSWORD=$PASSWORD \
   -e VIRTUAL_PORT=80 \
-  openco/$PROJECT-$BRANCH
+  openco/$PROJECT:$BRANCH-$TAG

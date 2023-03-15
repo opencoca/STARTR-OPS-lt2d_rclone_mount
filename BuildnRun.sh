@@ -21,9 +21,15 @@ echo      BRANCH=$BRANCH
 echo docker build -t openco/$PROJECT-$BRANCH:$TAG .
 echo docker tag -f openco/$PROJECT-$BRANCH:$TAG
 echo   openco/$PROJECT-$BRANCH:latest
-docker build -t openco/$PROJECT-$BRANCH:$TAG . \
+docker build -t openco/$PROJECT:$BRANCH-$TAG . \
   && \
-docker tag openco/$PROJECT-$BRANCH:$TAG \
- openco/$PROJECT-$BRANCH:latest \
+docker tag openco/$PROJECT:$BRANCH-$TAG \
+ openco/$PROJECT:$BRANCH-latest \
+  && \
+docker tag openco/$PROJECT:$BRANCH-$TAG \
+ openco/$PROJECT:$TAG \
+  && \
+docker tag openco/$PROJECT:$BRANCH-$TAG \
+ openco/$PROJECT:latest \
   && \
   ./docker_run.sh
