@@ -6,7 +6,7 @@ FULL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 # Lowecase the branch
 FULL_BRANCH=`echo $FULL_BRANCH|awk '{print tolower($0)}'`
      BRANCH=${FULL_BRANCH##*/}
-        TAG=$(git describe --always --tag)
+        TAG=$(git describe --always --tag --abbrev=0)
 
 DHOME="/home/docker"
 
