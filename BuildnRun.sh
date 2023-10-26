@@ -1,10 +1,9 @@
-# OpenCo Cocom Build 'n' Run Script 
+# OpenCo Cocom Build 'n' Run Script
 #!/bin/bash
 # Version 1.0.2
 
 # This simple script builds and runs this directory 's Dockerfile Image
-# It also tags it as 192.168.0.124:5000/openco/cocom, this is useful for pushing to the cocom internal repo when logged into the OpenCo VPN
-# sudo docker build -t 192.168.0.124:5000/openco/cocom . && sudo docker run -p 80 192.168.0.124:5000/openco/cocom
+# It also docker tags it based on its git PROJECT BRANCH and TAG , this is useful for pushing to the cocom internal repo when logged into the OpenCo VPN
 PROJECTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
     PROJECT=${PROJECTPATH##*/}
 FULL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
